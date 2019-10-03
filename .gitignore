@@ -1,0 +1,16 @@
+.idea/
+*.iml
+*.sw?
+
+*.log
+*.log.*
+
+.DS_Store
+
+target/
+.settings/
+bin/
+.classpath
+.project
+
+app/overlays

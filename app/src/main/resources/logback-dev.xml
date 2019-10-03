@@ -1,0 +1,18 @@
+<configuration>
+  <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <pattern>%d [%thread] %-5level %logger - %msg%n</pattern>
+    </encoder>
+  </appender>
+
+  <appender name="async.default" class="ch.qos.logback.classic.AsyncAppender">
+    <appender-ref ref="console" />
+  </appender>
+
+  <root level="info">
+    <appender-ref ref="async.default"/>
+    <logger name="com.google.maps" level="off"/>
+  </root>
+
+  <shutdownHook class="ch.qos.logback.core.hook.DelayingShutdownHook"/>
+</configuration>

@@ -1,0 +1,55 @@
+<configuration debug="true">
+  <appender name="catalina" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <encoder>
+      <pattern>%d [%thread] %-5level %logger - %msg%n</pattern>
+    </encoder>
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <fileNamePattern>logs/catalina.%d{yyyy-MM-dd}.log</fileNamePattern>
+      <maxHistory>3</maxHistory>
+    </rollingPolicy>
+  </appender>
+
+  <appender name="quartz" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <encoder>
+      <pattern>%d %p - %m%n</pattern>
+    </encoder>
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <fileNamePattern>logs/quartz.%d{yyyy-MM-dd}.log</fileNamePattern>
+      <maxHistory>3</maxHistory>
+    </rollingPolicy>
+  </appender>
+
+  <appender name="flyway" class="ch.qos.logback.core.FileAppender">
+    <file>logs/flyway.log</file>
+    <encoder>
+      <pattern>%d %p - %m%n</pattern>
+    </encoder>
+  </appender>
+
+  <appender name="async.default" class="ch.qos.logback.classic.AsyncAppender">
+    <appender-ref ref="catalina" />
+  </appender>
+
+  <appender name="async.quartz" class="ch.qos.logback.classic.AsyncAppender">
+    <appender-ref ref="quartz" />
+  </appender>
+
+  <appender name="async.flyway" class="ch.qos.logback.classic.AsyncAppender">
+    <appender-ref ref="flyway" />
+  </appender>
+
+
+  <logger name="org.quartz" level="info" additivity="false">
+    <appender-ref ref="async.quartz"/>
+  </logger>
+
+  <logger name="org.flywaydb" level="info" additivity="false">
+    <appender-ref ref="async.flyway"/>
+  </logger>
+
+  <root level="info">
+    <appender-ref ref="async.default"/>
+  </root>
+
+  <shutdownHook class="ch.qos.logback.core.hook.DelayingShutdownHook"/>
+</configuration>

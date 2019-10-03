@@ -1,0 +1,1 @@
+Your ride request has been assigned to ${driver} - ${color} ${make} ${model} ${license}. Driver will arrive in <#if eta gt 1>${eta} minutes.<#else>less than 1 minute</#if>
